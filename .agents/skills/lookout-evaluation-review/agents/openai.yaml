@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lookout Evaluation Review"
+  short_description: "Review evaluation validity, leakage and result claims"
+  default_prompt: "Use $lookout-evaluation-review to assess whether the scoped evaluation evidence supports its stated decision and claims."

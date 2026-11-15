@@ -1,0 +1,19 @@
+# Instance files. They belong to one seat and are never part of the kit.
+/TEAM.md
+/QUEUE.md
+/TOOLS.local.md
+/reviews/
+/tasks/
+/local/
+/docs/local/
+/projects/*
+!/projects/README.md
+/skills/provenance.local.json
+/.agent-comms/
+/unverified/
+
+# Editor, agent runtime and build state.
+.idea/
+.claude/
+.DS_Store
+__pycache__/

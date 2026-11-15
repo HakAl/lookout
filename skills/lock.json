@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "packages": [
+    {
+      "name": "lookout-architecture-review",
+      "files": {
+        "LICENSE": "86281414edfa02a740521c2f849b41bec7a7a9d5441f6d44fa995fa9ca87280c",
+        "SKILL.md": "247dafd540a645091f846a920e43a5355aaa138f54cdc1c8f755f205b2ee72be"
+      },
+      "package_sha256": "386520561ad587fd2178dee82161da583b16d11d50ed2a32363120ed6f2e10f1",
+      "source": {
+        "name": "lookout-architecture-review",
+        "source_directory": "src/skills/architecture-review-lens",
+        "origin": "https://github.com/event4u-app/agent-config/",
+        "base_commit": "5ca2d5b1ac0cc28deb4a2104458f6547c75dc1b4",
+        "source_dirty": false,
+        "source_files": {
+          "src/skills/architecture-review-lens/SKILL.md": "0b6fb12c1704c0981836798abb4ebc38221274c31074f7211a5a9bbcfb4340c6",
+          "LICENSE": "86281414edfa02a740521c2f849b41bec7a7a9d5441f6d44fa995fa9ca87280c",
+          "NOTICE": "8cbbd65bf7bfb69ec6463953f376c6b1b4afac53182ac43e05beb38df09d3757"
+        }
+      },
+      "local_changes": "Standalone local adaptation; repair leak-polarity ambiguity, require actual contracts/evidence, remove suite routing and inferred model identity, allow host consolidation.",
+      "installed_path": ".agents/skills/lookout-architecture-review",
+      "admission": "accepted for bounded local review; no safety certification"
+    },
+    {
+      "name": "lookout-ce-doc-review",
+      "files": {
+        "LICENSE": "61d89de7646effdaba2d0a4ab7bd0eba60b4094b83efe5bc73c7940e43e93fc6",
+        "SKILL.md": "be51557238f7326e0a2eb9de75d98c00990220861ef013e5a4cf339dc9142208"
+      },
+      "package_sha256": "36b9059d4db550332a46ab9a9c30652f0fc3f8552f2a2956fb88fb4eb4ea2473",
+      "source": {
+        "name": "lookout-ce-doc-review",
+        "source_directory": "skills/ce-doc-review",
+        "origin": "https://github.com/EveryInc/compound-engineering-plugin/",
+        "base_commit": "a763b392c3c05faa1a383c0d228b7e95200ecc90",
+        "source_dirty": false,
+        "source_files": {
+          "skills/ce-doc-review/SKILL.md": "0a1f44d7bd0014cd0e5b895dd8d152e865532ebf5d47504596fad552ec282a2f",
+          "skills/ce-doc-review/references/personas/coherence-reviewer.md": "f3e0cfd21f190a6398e9381d6279955c719df3fe952675af1bb689d970665f57",
+          "skills/ce-doc-review/references/personas/feasibility-reviewer.md": "fd49162d33a76f02e26c871408bb992d1e2e157b44d4906999a90eeef8d79289",
+          "skills/ce-doc-review/references/personas/scope-guardian-reviewer.md": "bdf7d34f92a8f2abfd05fe09b470657de69ee44c683c82eb20e80a69761b3d0c",
+          "LICENSE": "61d89de7646effdaba2d0a4ab7bd0eba60b4094b83efe5bc73c7940e43e93fc6"
+        }
+      },
+      "local_changes": "Standalone local adaptation of CE document review and coherence/feasibility/scope questions. No scripts, generic subagents, peer-model invocation, pack fetching, config writes or auto-fixes.",
+      "installed_path": ".agents/skills/lookout-ce-doc-review",
+      "admission": "accepted for bounded local review; no safety certification"
+    },
+    {
+      "name": "lookout-review",
+      "files": {
+        "SKILL.md": "7ce644858f84f454e14b64c736687eb7a974893a1c91dc1f878d128e44118431",
+        "agents/openai.yaml": "4646bf0cfca7e5035c783f738429a507350921e32da658f62ef9dda76eed7146",
+        "references/interaction-evidence.md": "141779219f481c51012432be6bfe148a6e7def8198dba913e9e5f42a22d6fdaf",
+        "references/migrations.md": "b0f5cd7b273dc773ed3be9cf47e170b456f0ea97c87d03d11493fdc08675d1cc",
+        "references/report-contract.md": "0ebb52bfa7ab7bc53ec3526398a918b4719f501e0d526af0bba8e80016915492",
+        "references/security-boundaries.md": "b28364e9fa34bf2d579c16183945670df34bc9d068aa2d5494ea5343031420f4",
+        "scripts/frame_artifact.py": "b9d78c461b8b068f00d6759e94b09c4312926d01c8f54616419b0ea1174891a5",
+        "scripts/resolve_base.py": "bcd8ed3da9fc490483d4f3bc72aeb6235b44ee581f13b8a373da91303933d0df",
+        "scripts/validate_record.py": "781447bcb3f8fb8821c8d0115006a1e63ea362d316c8d56e9f5541fab8cd06d4"
+      },
+      "package_sha256": "93dcdecb34ccbd3c896818bc6ca63e0b7823f50b3fcc1f43664c9434fd47fb02",
+      "source": {
+        "name": "lookout-review",
+        "source_directory": "review",
+        "origin": "https://github.com/HakAl/reviewerest",
+        "base_commit": "9446cfbb8cabee5fdc1d679f60d120519472a79e",
+        "source_dirty": false,
+        "source_files": {
+          "review/SKILL.md": "86edc21e521f2e44024998e3a54bc4e805b12abbc6c96063ab73b963911e9af0",
+          "review/agents/openai.yaml": "4c593a16e82c506538c2946202a3ecce3a47daeb752ec17bbc402bd6a5118d33",
+          "review/references/interaction-evidence.md": "141779219f481c51012432be6bfe148a6e7def8198dba913e9e5f42a22d6fdaf",
+          "review/references/migrations.md": "b0f5cd7b273dc773ed3be9cf47e170b456f0ea97c87d03d11493fdc08675d1cc",
+          "review/references/report-contract.md": "0ebb52bfa7ab7bc53ec3526398a918b4719f501e0d526af0bba8e80016915492",
+          "review/references/security-boundaries.md": "b28364e9fa34bf2d579c16183945670df34bc9d068aa2d5494ea5343031420f4",
+          "review/scripts/frame_artifact.py": "b9d78c461b8b068f00d6759e94b09c4312926d01c8f54616419b0ea1174891a5",
+          "review/scripts/resolve_base.py": "bcd8ed3da9fc490483d4f3bc72aeb6235b44ee581f13b8a373da91303933d0df",
+          "review/scripts/validate_record.py": "781447bcb3f8fb8821c8d0115006a1e63ea362d316c8d56e9f5541fab8cd06d4"
+        }
+      },
+      "local_changes": "reviewerest v1.4.0; source file hashes equal the published tag. Only frontmatter name and UI display/invocation renamed. Upstream is Apache-2.0; its package LICENSE and NOTICE files are not copied into this package.",
+      "installed_path": ".agents/skills/lookout-review",
+      "admission": "accepted for bounded local review; no safety certification"
+    },
+    {
+      "name": "lookout-rust-review",
+      "files": {
+        "LICENSE": "663ce6f8f087dc366602ac34eefd4cf71a5d8db411359422298a1399a014a9d5",
+        "SKILL.md": "48273176a8ab091bf7f390ad528d00d0aa1676001b625e02c8a2f493e1302e46",
+        "agents/openai.yaml": "e78193351bb6f82c6b1add62f0812294661a2927dab9a4cb529c2d894bcc1298",
+        "references/sources.md": "38c50e06227c3f2e716b277789c519b47d254367c26e5ffe43df5fcacd5fa3fb"
+      },
+      "package_sha256": "401ac790d9213236e8cffaf5edd7dd98d8a073231b11e3716e4c45430d789bca",
+      "source": {
+        "origin": "https://github.com/leonardomso/rust-skills",
+        "base_commit": "fd2a861ab0406a4ac536a55274d14ea6fd1ca9c9",
+        "source_dirty": false,
+        "source_files": {
+          "SKILL.md": "5a74070e740c8aacec1264adfc537daeab14c0f629bb604943295c08fd9252e6",
+          "LICENSE": "663ce6f8f087dc366602ac34eefd4cf71a5d8db411359422298a1399a014a9d5",
+          "rules/num-float-compare.md": "0af0ed600acab59edfe8ff7f7a49eb0091d06ce581e051550fe33f7e4d50468a",
+          "rules/async-fn-in-trait.md": "ad92f77e431f6e0e825755b9f334c83cba7e4c7709e456d06fd173a042b1a4c3",
+          "rules/async-no-lock-await.md": "c83093b164ee511801dddbe5d1297e9ef0e73ccecdbc7c835d5d356078676196",
+          "rules/coll-set-membership.md": "b645928c78212e1dec8b0b15a0be0559fbdf923eb3b6e270343450cc2c8631d6"
+        },
+        "scope": "Selected six upstream files only; local rewritten adaptation checked against primary docs"
+      },
+      "local_changes": "Trim to consequential read-only Rust review; correct float identity and async trait dispatch claims; preserve protocol/ownership/lock invariants; version-aware guidance; no blanket optimizations, installers or automatic updates. MIT notice retained.",
+      "installed_path": ".agents/skills/lookout-rust-review",
+      "accepted_date": "2026-10-03 America/New_York",
+      "admission": "Accepted for bounded local Rust review; one eight-case behavior trial, no general effectiveness or safety certification"
+    },
+    {
+      "name": "lookout-skill-audit",
+      "files": {
+        "LICENSE": "810e371e7fef4c973b9efb5d2a2f8c9ce1b50f720680fccd5e039a6f1941add3",
+        "NOTICE": "283046a09ca8e18b69bd6be63a4889282282dae5d457ba18c39dd032cf7044c6",
+        "SKILL.md": "e157ddaef2d067c24fb44796f2a2e41579d068425c990684857d314d9dc9f429",
+        "TRADEMARK.md": "4d70337b23799d491b6297a0e7cf1de65193d73dcacd8a0fd8e08684001e97ed",
+        "agents/openai.yaml": "9a17e21cb7ce03fdf4a50f57624157472b9f03abf95b74bb752f91a05602c59a",
+        "references/decomposition.md": "0648709cfe0572bdbd55b48935487b70412a3c865ab1f2d41846af0ce7cc108d",
+        "references/implementation.md": "d60f79f90b2f77478f2713b3e13df72888b365ae6f1d79e990f470c384dbde3c",
+        "references/instruction-quality.md": "f9a331e22b360ecf346e7bf65423fba9dbfb57feca35ee4d0ea51842556d35ba",
+        "references/routing-metadata.md": "3a6a6644104f7b9b91175815201fb287062a770776d13ffb6f4727eb5518fcc6"
+      },
+      "package_sha256": "620f6ef0d280711eefdc33a0e3e661db322fe2fd4722772d186bba7ed2512c3a",
+      "source": {
+        "name": "lookout-skill-audit",
+        "source_directory": "skills/skills-audit",
+        "origin": "https://github.com/allemaar/open-skills",
+        "base_commit": "cb53e9d470f343c971708ccccd8111d40ef16325",
+        "source_dirty": false,
+        "source_files": {
+          "skills/skills-audit/SKILL.md": "2143523651c38e8c65419a5948560d5dcfa9f104808b145809dc906be1d1f97f",
+          "skills/skills-audit/references/instruction-quality.md": "f9a331e22b360ecf346e7bf65423fba9dbfb57feca35ee4d0ea51842556d35ba",
+          "skills/skills-audit/references/decomposition.md": "0648709cfe0572bdbd55b48935487b70412a3c865ab1f2d41846af0ce7cc108d",
+          "skills/skills-audit/references/routing-metadata.md": "17f37b3b488dc8aac7322c5ff1b1c6a654ca18dc8ea84224e9c8b2d2bd1c3635",
+          "skills/skills-audit/references/implementation.md": "d60f79f90b2f77478f2713b3e13df72888b365ae6f1d79e990f470c384dbde3c",
+          "LICENSE": "810e371e7fef4c973b9efb5d2a2f8c9ce1b50f720680fccd5e039a6f1941add3",
+          "NOTICE": "283046a09ca8e18b69bd6be63a4889282282dae5d457ba18c39dd032cf7044c6",
+          "TRADEMARK.md": "4d70337b23799d491b6297a0e7cf1de65193d73dcacd8a0fd8e08684001e97ed"
+        }
+      },
+      "local_changes": "Adapt entrypoint for read-only audit, preserve explicit-only policy, remove housekeeping/successor workflows, retain four local references, adapt routing policy with changed-file notice, include LICENSE NOTICE TRADEMARK.",
+      "installed_path": ".agents/skills/lookout-skill-audit",
+      "admission": "accepted for bounded local review; no safety certification"
+    },
+    {
+      "name": "lookout-contract-review",
+      "files": {
+        "SKILL.md": "e186e88c3a507bae85d6eca1764dca6bef5d8cc1ed24a0689b231f35923e1128",
+        "agents/openai.yaml": "60b0dd799300cae06d6f71d651931e758aade312e7f41e89bdd763d6c61dd9ea",
+        "references/sources.md": "b44fe631332f2d550b044ae012c6940e5b4eb2bbf8d6532d3a5306b9cc9ba8f6"
+      },
+      "package_sha256": "9306eb61f8aab47237aed23a557502325c04cff8d3197153d40991a69b5caaaf",
+      "source": {
+        "origin": "original local authorship",
+        "base_commit": null,
+        "source_dirty": false,
+        "source_files": {
+          "SKILL.md": "e186e88c3a507bae85d6eca1764dca6bef5d8cc1ed24a0689b231f35923e1128",
+          "agents/openai.yaml": "60b0dd799300cae06d6f71d651931e758aade312e7f41e89bdd763d6c61dd9ea",
+          "references/sources.md": "42e476cf6cc0c8734726f3cdc085c41b27f48bde5e4b2fad57ad7b6196dd67d3"
+        },
+        "scope": "Original domain review guidance; selected primary references documented in references/sources.md"
+      },
+      "local_changes": "New original package, informed by recurring review contracts; no imported workflow or third-party implementation. 2026-11-14: project names in references/sources.md replaced with generic wording for the portable kit; no guidance changed.",
+      "installed_path": ".agents/skills/lookout-contract-review",
+      "accepted_date": "2026-10-03 America/New_York",
+      "admission": "accepted for bounded local review; no efficacy or runtime-enforcement certification"
+    },
+    {
+      "name": "lookout-enforcement-review",
+      "files": {
+        "SKILL.md": "ca5130c54b0dbfb26674a8abd8e926b3de708ba0d6342d4390684bbcadb69854",
+        "agents/openai.yaml": "edb9f8734fcada668b696d5504c31d2280eb12009a2a50a04101d49e07190ca0",
+        "references/sources.md": "6c51ec7dc156c893aa4cc363917d72446b13c6fd36fd5e33ae6315af7311edc9"
+      },
+      "package_sha256": "cf80db72d33b2d88860d0d69b5f7b7756de70973760fc5d5f498b16d85ac0cb2",
+      "source": {
+        "origin": "original local authorship",
+        "base_commit": null,
+        "source_dirty": false,
+        "source_files": {
+          "SKILL.md": "ca5130c54b0dbfb26674a8abd8e926b3de708ba0d6342d4390684bbcadb69854",
+          "agents/openai.yaml": "edb9f8734fcada668b696d5504c31d2280eb12009a2a50a04101d49e07190ca0",
+          "references/sources.md": "e29ab2fab596566714143531c92fe01a30787b9384b268d9fb287a2ab9bfdecd"
+        },
+        "scope": "Original domain review guidance; selected primary references documented in references/sources.md"
+      },
+      "local_changes": "New original package, informed by recurring review contracts; no imported workflow or third-party implementation. 2026-11-14: project names in references/sources.md replaced with generic wording for the portable kit; no guidance changed.",
+      "installed_path": ".agents/skills/lookout-enforcement-review",
+      "accepted_date": "2026-10-03 America/New_York",
+      "admission": "accepted for bounded local review; no efficacy or runtime-enforcement certification"
+    },
+    {
+      "name": "lookout-evaluation-review",
+      "files": {
+        "SKILL.md": "31d718fd5283346dc3ee7c89f3d5cf3cbee9a705516aecc995be494043c78246",
+        "agents/openai.yaml": "8752a35e18575ab045f65e584f79849835cd9ad737006fae24fa3330e2380ec4",
+        "references/sources.md": "4c9048fa0a757e79d64e0acb5c69af4c7fcf03faea8465cec01cbc31d8321e60"
+      },
+      "package_sha256": "61f547149d05b4b44432ecc047cb43dbd65bb59b2f60c99108cdeb62488789c2",
+      "source": {
+        "origin": "original local authorship",
+        "base_commit": null,
+        "source_dirty": false,
+        "source_files": {
+          "SKILL.md": "31d718fd5283346dc3ee7c89f3d5cf3cbee9a705516aecc995be494043c78246",
+          "agents/openai.yaml": "8752a35e18575ab045f65e584f79849835cd9ad737006fae24fa3330e2380ec4",
+          "references/sources.md": "4c9048fa0a757e79d64e0acb5c69af4c7fcf03faea8465cec01cbc31d8321e60"
+        },
+        "scope": "Original domain review guidance; selected primary references documented in references/sources.md"
+      },
+      "local_changes": "New original package, informed by recurring review contracts; no imported workflow or third-party implementation.",
+      "installed_path": ".agents/skills/lookout-evaluation-review",
+      "accepted_date": "2026-10-03 America/New_York",
+      "admission": "accepted for bounded local review; no efficacy or runtime-enforcement certification"
+    },
+    {
+      "name": "lookout-recovery-review",
+      "files": {
+        "SKILL.md": "ec35056ecb9d9fa6797feb87417c93783905215eb523ac547b2a62a1f58893a9",
+        "agents/openai.yaml": "311fa1a8b11d7610255ce71a7064a8b9104bebb6646141fc627965e0efb53e9a",
+        "references/sources.md": "21dffb9220695061cef8a5a04d691eeabbb3e0b6f948619609ca3b92bcfad5a3"
+      },
+      "package_sha256": "a43f4ce2157d08858d223abef1a3e28e6bf3fc39cd547492c4432918593b9216",
+      "source": {
+        "origin": "original local authorship",
+        "base_commit": null,
+        "source_dirty": false,
+        "source_files": {
+          "SKILL.md": "ec35056ecb9d9fa6797feb87417c93783905215eb523ac547b2a62a1f58893a9",
+          "agents/openai.yaml": "311fa1a8b11d7610255ce71a7064a8b9104bebb6646141fc627965e0efb53e9a",
+          "references/sources.md": "6456559b7174f975007502ff2ec1561802d7d58fd1549ca9fb14a6fc2cb325e5"
+        },
+        "scope": "Original domain review guidance; selected primary references documented in references/sources.md"
+      },
+      "local_changes": "New original package, informed by recurring review contracts; no imported workflow or third-party implementation. 2026-11-14: project names in references/sources.md replaced with generic wording for the portable kit; no guidance changed.",
+      "installed_path": ".agents/skills/lookout-recovery-review",
+      "accepted_date": "2026-10-03 America/New_York",
+      "admission": "accepted for bounded local review; no efficacy or runtime-enforcement certification"
+    }
+  ],
+  "package_hash_algorithm": "SHA256 of UTF-8 concatenation of lexically sorted package-relative POSIX path + TAB + lowercase file SHA256 + LF; includes every regular file, no directories.",
+  "task": "SKILLS-001",
+  "accepted_date": "2026-09-26 America/New_York",
+  "updates": "manual intake and final-byte review only",
+  "last_update": {
+    "task": "SKILLS-003",
+    "date": "2026-10-03 America/New_York"
+  }
+}

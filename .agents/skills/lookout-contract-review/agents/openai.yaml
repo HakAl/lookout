@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lookout Contract Review"
+  short_description: "Review cross-language and persisted-data contracts"
+  default_prompt: "Use $lookout-contract-review to review the affected producer-consumer contract and report supported compatibility findings."

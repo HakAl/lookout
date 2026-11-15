@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lookout Enforcement Review"
+  short_description: "Review authority binding and actual effect boundaries"
+  default_prompt: "Use $lookout-enforcement-review to trace the scoped authority and effect boundary and report supported failures."

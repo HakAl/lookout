@@ -1,0 +1,17 @@
+Lookout
+Copyright 2026 Lookout contributors
+
+Licensed under the Apache License, Version 2.0. The root LICENSE covers the
+original kit material.
+
+This kit includes skill packages adapted from other projects:
+
+- .agents/skills/lookout-review is reviewerest v1.4.0
+  (https://github.com/HakAl/reviewerest), Copyright 2026 reviewerest
+  contributors, licensed under the Apache License, Version 2.0. The skill name
+  and its UI display and invocation name were changed; the other files are
+  unmodified. The referenced external guidance remains the work of its
+  respective authors.
+- Other adapted packages carry their upstream license in a LICENSE file inside
+  their own directory under .agents/skills/. skills/lock.json records each
+  package's origin, base commit and a note on local changes.

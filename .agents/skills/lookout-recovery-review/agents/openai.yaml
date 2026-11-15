@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lookout Recovery Review"
+  short_description: "Review workflow delivery, retries and recovery semantics"
+  default_prompt: "Use $lookout-recovery-review to trace the affected workflow through failure and recovery and report supported findings."

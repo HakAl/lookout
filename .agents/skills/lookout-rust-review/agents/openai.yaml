@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lookout Rust Review"
+  short_description: "Check consequential Rust contracts and failure paths"
+  default_prompt: "Use $lookout-rust-review to review this Rust change against its callers and stated contracts."

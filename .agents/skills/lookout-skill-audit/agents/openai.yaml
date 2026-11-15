@@ -1,0 +1,6 @@
+interface:
+  display_name: "Lookout Skill Audit"
+  short_description: "Explicit skill audit with evidence and dependency limits"
+  default_prompt: "Use $lookout-skill-audit to audit the selected skill and report supported findings and coverage limits."
+policy:
+  allow_implicit_invocation: false
