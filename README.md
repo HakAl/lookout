@@ -19,13 +19,13 @@ in `.agents/skills/`. How much an agent picks up by itself differs.
 | Codex | Yes | Yes | None | Codex documentation, and use as the seat the kit was developed with. Not run in a fresh instance. |
 | Antigravity CLI (`agy` 1.5.16) | Reported yes | Reported eight | None | One fresh-instance session |
 | OpenCode 2.3.2 | Reported yes | Reported eight | None | One fresh-instance session |
-| Claude Code 2.1.331 | Reported yes | Reported none; eight after `--claude` and a restart | Run setup with `--claude` | One fresh-instance session before and after |
+| Claude Code 2.1.331 | Reported yes | Reported none; eight after `--claude` and a restart | Run setup with `--claude` | One fresh-instance session for each setup, without and with the link |
 
 The three tested rows are each agent's own answer, at startup and without
 tools, to which instruction files and `lookout-` skills it had. They come from
-one session each on one macOS machine, where user-level instructions were
-also present for OpenCode and Claude Code. Other versions and configurations
-may differ.
+one initial session per agent, plus a new Claude Code session after linking,
+on one macOS machine, where user-level instructions were also present for
+OpenCode and Claude Code. Other versions and configurations may differ.
 
 Claude Code documents `.claude/skills/` as its location for project skills.
 Setup with `--claude` creates `.claude/skills` as a relative link to
@@ -34,8 +34,9 @@ link is created only after the skill check passes. Start a new Claude Code
 session afterwards.
 
 The ninth skill, `lookout-skill-audit`, is marked for explicit use only, and
-the agents above did not list it. Invoke it by name the way your agent
-provides; in Claude Code that is `/lookout-skill-audit`.
+the three tested agents left it out of their startup self-reports. Invoke it
+by name the way your agent provides; in Claude Code that is
+`/lookout-skill-audit`.
 
 Some launchers skip project discovery, as sandboxed or locked-down setups
 can. If yours still lets the agent read files in the instance, give the
