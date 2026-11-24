@@ -11,7 +11,29 @@ import sys
 
 
 def verify(root):
-    root = Path(root).resolve()
+    return _verify(Path(root).resolve())
+
+
+def verify_at(root_fd):
+    """Verify the directory an open descriptor holds, whatever its path names now.
+
+    Every read is made relative to that directory, by making it the working
+    directory for the duration of the check. A caller that did other work
+    through the same descriptor therefore gets a result for the same directory.
+    Changes the process working directory temporarily; not for threaded use.
+    """
+    previous = os.open(".", os.O_RDONLY)
+    try:
+        os.fchdir(root_fd)
+        try:
+            return _verify(Path("."))
+        finally:
+            os.fchdir(previous)
+    finally:
+        os.close(previous)
+
+
+def _verify(root):
     errors = []
     try:
         lock = json.loads((root / "skills/lock.json").read_text())

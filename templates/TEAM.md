@@ -2,8 +2,8 @@
 
 Instance file. Copy to `TEAM.md` at the instance root and replace every
 `<placeholder>`. Record only what has been observed; a name typed here is not a
-verified registration. After copying, links that start with `../` need that
-prefix removed.
+verified registration. `scripts/init_instance.py` makes the copy and adjusts
+the links; in a copy made by hand, remove the `../` prefix from links.
 
 ## State
 

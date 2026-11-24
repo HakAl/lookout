@@ -2,11 +2,12 @@
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
 
-from verify_skills import verify
+from verify_skills import verify, verify_at
 
 
 class VerifySkillsTests(unittest.TestCase):
@@ -28,6 +29,28 @@ class VerifySkillsTests(unittest.TestCase):
 
     def test_exact_install(self):
         self.assertEqual([], verify(self.root))
+
+    def held(self):
+        fd = os.open(self.root, os.O_RDONLY)
+        self.addCleanup(os.close, fd)
+        return fd
+
+    def test_descriptor_check_agrees_and_restores_working_directory(self):
+        before = os.getcwd()
+        self.assertEqual([], verify_at(self.held()))
+        self.assertEqual(before, os.getcwd())
+        self.file.write_text("different instructions\n")
+        self.assertEqual(verify(self.root), verify_at(self.held()))
+        self.assertTrue(any("Changed file" in e for e in verify_at(self.held())))
+        self.assertEqual(before, os.getcwd())
+
+    def test_descriptor_check_follows_the_directory_not_its_path(self):
+        fd = self.held()
+        self.file.write_text("different instructions\n")
+        moved = self.root.with_name(self.root.name + "-moved")
+        self.root.rename(moved)
+        self.addCleanup(moved.rename, self.root)
+        self.assertTrue(any("Changed file" in e for e in verify_at(fd)))
 
     def test_changed_bytes(self):
         self.file.write_text("different instructions\n")

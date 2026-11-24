@@ -3,8 +3,8 @@
 Instance file. Copy to `TOOLS.local.md` at the instance root. It is the overlay
 for [TOOLS.md](../TOOLS.md): the kit's local review skills are listed there,
 and this file records what this seat additionally has. Delete the sections that
-do not apply. After copying, links that start with `../` need that prefix
-removed.
+do not apply. `scripts/init_instance.py` makes the copy and adjusts the links;
+in a copy made by hand, remove the `../` prefix from links.
 
 ## Workers
 
