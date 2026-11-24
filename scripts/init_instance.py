@@ -18,8 +18,16 @@ that one descriptor, so the exit status describes a single directory even if
 the path is pointed elsewhere while the script runs. The command also fails if
 the path no longer names that directory at the end.
 
-Exit codes: 0 all four instance files are regular files and the skills match
-the lock, 1 otherwise.
+With --claude it also creates the link `.claude/skills -> ../.agents/skills`,
+which is where Claude Code looks for project skills. The link is relative and
+points at the kit's own skill directory, so the files Claude Code loads are the
+ones the lock covers. The link is created only after the skill check has
+passed, so a failed setup does not open a new way for an agent to load skills
+that failed the check. An existing `.claude/skills` is kept only if it is
+exactly that link; anything else is reported as an error and left alone.
+
+Exit codes: 0 all four instance files are regular files, the requested link is
+in place and the skills match the lock, 1 otherwise.
 
 Python 3.9+, standard library only. Needs an operating system where Python can
 open paths relative to a directory descriptor (Linux, macOS and other Unix).
@@ -46,7 +54,7 @@ INSTANCE_FILES = (
     ),
 )
 
-_NEEDED = (os.open, os.mkdir, os.stat, os.unlink, os.link)
+_NEEDED = (os.open, os.mkdir, os.stat, os.unlink, os.link, os.symlink, os.readlink)
 _UNSUPPORTED = (
     "This platform cannot open paths relative to a directory without "
     "following links. Copy the templates by hand; see templates/, then run "
@@ -198,6 +206,53 @@ def _init(root_fd):
     return created, kept, errors
 
 
+CLAUDE_SKILLS = ".claude/skills"
+CLAUDE_SKILLS_TARGET = "../.agents/skills"
+
+
+def link_claude_skills(root):
+    """Create the Claude Code skill link. Return (created, kept, errors).
+
+    root is a path or an open directory descriptor, which is left open.
+    """
+    if not supported():
+        return [], [], [_UNSUPPORTED]
+    if isinstance(root, int):
+        return _link_claude_skills(root)
+    try:
+        root_fd = open_root(root)
+    except OSError as exc:
+        return [], [], [f"Could not open instance root: {exc}"]
+    try:
+        return _link_claude_skills(root_fd)
+    finally:
+        os.close(root_fd)
+
+
+def _link_claude_skills(root_fd):
+    parent = None
+    try:
+        # .claude itself must be a real directory beneath the root.
+        parent, leaf = _open_parent(root_fd, CLAUDE_SKILLS, create=True)
+        try:
+            os.symlink(CLAUDE_SKILLS_TARGET, leaf, dir_fd=parent)
+            return [CLAUDE_SKILLS], [], []
+        except FileExistsError:
+            pass
+        mode = os.stat(leaf, dir_fd=parent, follow_symlinks=False).st_mode
+        if stat.S_ISLNK(mode) and os.readlink(leaf, dir_fd=parent) == CLAUDE_SKILLS_TARGET:
+            return [], [CLAUDE_SKILLS], []
+        return [], [], [
+            f"{CLAUDE_SKILLS} exists but is not a link to {CLAUDE_SKILLS_TARGET}. "
+            "Move it aside and run this script again."
+        ]
+    except OSError as exc:
+        return [], [], [f"Could not create {CLAUDE_SKILLS}: {exc}"]
+    finally:
+        if parent is not None:
+            os.close(parent)
+
+
 def _same_directory(root_fd, path):
     try:
         held, named = os.fstat(root_fd), os.stat(path)
@@ -211,6 +266,10 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument(
+        "--claude", action="store_true",
+        help="also link .claude/skills to .agents/skills so Claude Code discovers the skills",
+    )
     args = parser.parse_args()
 
     if not supported():
@@ -227,6 +286,17 @@ def main():
         created, kept, errors = init(root_fd)
         # Same descriptor as setup: the skills checked are this instance's.
         skill_errors = verify_at(root_fd)
+        if args.claude:
+            if skill_errors:
+                # Do not hand Claude Code a path to skills that failed the check.
+                errors.append(
+                    f"{CLAUDE_SKILLS} was not created because the skill check failed."
+                )
+            else:
+                for collected, more in zip(
+                    (created, kept, errors), link_claude_skills(root_fd)
+                ):
+                    collected.extend(more)
         if not _same_directory(root_fd, root) or root.resolve() != root:
             errors.append(
                 f"{root} was replaced while this script ran. Setup and the "

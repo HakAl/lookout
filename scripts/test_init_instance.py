@@ -302,6 +302,96 @@ class InitInstanceTests(unittest.TestCase):
         self.assertEqual((0, ""), (code, err))
         self.assert_complete_instance()
 
+    def run_main_with(self, *flags):
+        out, err = io.StringIO(), io.StringIO()
+        argv = ["init_instance.py", "--root", str(self.root), *flags]
+        with mock.patch.object(sys, "argv", argv), \
+                contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = init_instance.main()
+        return code, out.getvalue(), err.getvalue()
+
+    def test_no_claude_link_without_the_flag(self):
+        self.complete_kit()
+        code, _, _ = self.run_main()
+        self.assertEqual(0, code)
+        self.assertFalse((self.root / ".claude").exists())
+
+    def test_claude_flag_links_the_kit_skill_directory(self):
+        self.complete_kit()
+        code, out, err = self.run_main_with("--claude")
+        self.assertEqual((0, ""), (code, err))
+        self.assertIn("Created .claude/skills", out)
+        link = self.root / ".claude/skills"
+        self.assertTrue(link.is_symlink())
+        self.assertEqual("../.agents/skills", os.readlink(link))
+        # Relative, so it resolves to this instance's own locked skills.
+        self.assertEqual((self.root / ".agents/skills").resolve(), link.resolve())
+        self.assertEqual(
+            sorted(p.name for p in (self.root / ".agents/skills").iterdir()),
+            sorted(p.name for p in link.iterdir()),
+        )
+        code, out, err = self.run_main_with("--claude")
+        self.assertEqual((0, ""), (code, err))
+        self.assertIn("Kept existing .claude/skills", out)
+
+    def test_claude_link_is_not_replaced_when_it_points_elsewhere(self):
+        self.complete_kit()
+        other = self.outside_dir()
+        (self.root / ".claude").mkdir()
+        (self.root / ".claude/skills").symlink_to(other, target_is_directory=True)
+        code, out, err = self.run_main_with("--claude")
+        self.assertEqual(1, code)
+        self.assertIn(".claude/skills exists but is not a link to ../.agents/skills", err)
+        self.assertEqual(str(other), os.readlink(self.root / ".claude/skills"))
+        self.assertNotIn("Next:", out)
+
+    def test_claude_skills_directory_is_not_replaced(self):
+        self.complete_kit()
+        (self.root / ".claude/skills/mine").mkdir(parents=True)
+        code, _, err = self.run_main_with("--claude")
+        self.assertEqual(1, code)
+        self.assertIn("exists but is not a link", err)
+        self.assertTrue((self.root / ".claude/skills/mine").is_dir())
+
+    def test_symlinked_claude_directory_is_not_written_through(self):
+        self.complete_kit()
+        outside = self.outside_dir()
+        (self.root / ".claude").symlink_to(outside, target_is_directory=True)
+        code, _, err = self.run_main_with("--claude")
+        self.assertEqual(1, code)
+        self.assertIn("Could not create .claude/skills", err)
+        self.assertEqual([], list(outside.iterdir()))
+
+    def test_failed_skill_check_does_not_create_the_claude_link(self):
+        self.complete_kit()
+        self.corrupt_a_skill(self.root)
+        code, out, err = self.run_main_with("--claude")
+        self.assertEqual(1, code)
+        self.assertIn("Changed file", err)
+        self.assertIn(".claude/skills was not created because the skill check failed", err)
+        self.assertNotIn("Created .claude/skills", out)
+        self.assertFalse((self.root / ".claude").exists())
+        self.assertFalse(os.path.lexists(self.root / ".claude/skills"))
+
+    def test_unreviewed_package_does_not_create_the_claude_link(self):
+        self.complete_kit()
+        extra = self.root / ".agents/skills/lookout-planted"
+        extra.mkdir()
+        (extra / "SKILL.md").write_text("planted\n")
+        code, _, err = self.run_main_with("--claude")
+        self.assertEqual(1, code)
+        self.assertIn("Unreviewed", err)
+        self.assertFalse(os.path.lexists(self.root / ".claude/skills"))
+
+    def test_existing_claude_link_survives_a_failed_skill_check(self):
+        self.complete_kit()
+        self.assertEqual(0, self.run_main_with("--claude")[0])
+        self.corrupt_a_skill(self.root)
+        code, _, err = self.run_main_with("--claude")
+        self.assertEqual(1, code)
+        self.assertIn("Changed file", err)
+        self.assertEqual("../.agents/skills", os.readlink(self.root / ".claude/skills"))
+
     def test_second_run_changes_nothing(self):
         init_instance.init(self.root)
         before = {d: (self.root / d).read_bytes() for d in DESTINATIONS}

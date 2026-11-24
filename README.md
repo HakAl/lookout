@@ -12,17 +12,42 @@ what a given instance actually has.
 ## Which agents it works with
 
 The kit is plain files: standing instructions in `AGENTS.md` and review skills
-in `.agents/skills/`. How much an agent picks up by itself differs:
+in `.agents/skills/`. How much an agent picks up by itself differs.
 
-- **Codex** loads `AGENTS.md` and discovers the skills in `.agents/skills/`
-  when started from the instance root with project discovery enabled. The kit
-  was developed with a Codex seat.
-- **Claude Code** looks for project skills in `.claude/skills/` and reads
-  `AGENTS.md` only in some versions and configurations. Confirm it has loaded
-  `AGENTS.md`, or tell it to read the file, and give it the path of the skill
-  to use, for example `.agents/skills/lookout-review/SKILL.md`.
-- **Other agents**: treat them like Claude Code unless their documentation
-  says they read both locations.
+| Agent | Reads `AGENTS.md` | Finds the skills | Setup | Basis |
+| --- | --- | --- | --- | --- |
+| Codex | Yes | Yes | None | Codex documentation, and use as the seat the kit was developed with. Not run in a fresh instance. |
+| Antigravity CLI (`agy` 1.5.16) | Reported yes | Reported eight | None | One fresh-instance session |
+| OpenCode 2.3.2 | Reported yes | Reported eight | None | One fresh-instance session |
+| Claude Code 2.1.331 | Reported yes | Reported none; eight after `--claude` and a restart | Run setup with `--claude` | One fresh-instance session before and after |
+
+The three tested rows are each agent's own answer, at startup and without
+tools, to which instruction files and `lookout-` skills it had. They come from
+one session each on one macOS machine, where user-level instructions were
+also present for OpenCode and Claude Code. Other versions and configurations
+may differ.
+
+Claude Code documents `.claude/skills/` as its location for project skills.
+Setup with `--claude` creates `.claude/skills` as a relative link to
+`.agents/skills`, so Claude Code loads the same files the lock covers. The
+link is created only after the skill check passes. Start a new Claude Code
+session afterwards.
+
+The ninth skill, `lookout-skill-audit`, is marked for explicit use only, and
+the agents above did not list it. Invoke it by name the way your agent
+provides; in Claude Code that is `/lookout-skill-audit`.
+
+Some launchers skip project discovery, as sandboxed or locked-down setups
+can. If yours still lets the agent read files in the instance, give the
+instructions and skill in the first request as a fallback:
+
+> Read `AGENTS.md` in this directory and follow it as your standing
+> instructions. For review work use `.agents/skills/lookout-review/SKILL.md`.
+
+As a startup diagnostic, use your agent's own listing of loaded context and
+skills where it has one. Otherwise ask it, before any other work, which
+instruction files it loaded and which skills beginning with `lookout-` it
+has. Its answer is a self-report, not proof.
 
 ## Quick start
 
@@ -31,7 +56,7 @@ Requires Python 3.9 or later on Linux, macOS or another Unix.
 ```sh
 git clone https://github.com/HakAl/lookout.git
 cd lookout
-python3 scripts/init_instance.py
+python3 scripts/init_instance.py            # add --claude for Claude Code
 ```
 
 The script creates the instance files `TEAM.md`, `QUEUE.md`, `TOOLS.local.md`

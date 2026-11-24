@@ -30,4 +30,5 @@ part of the kit.
 | `reviews/<task-id>/` | Instance | Create when a review needs durable artifacts |
 | `local/` | Instance | Create for disposable inputs, snapshots, and large logs |
 | `skills/provenance.local.json` | Instance | Local source paths and admission receipts behind the lock |
+| `.claude/skills` | Instance | Optional link to `.agents/skills` for Claude Code, created by `init_instance.py --claude` |
 | `unverified/` | Instance | Downloaded catalogs, if any; outside active skill discovery |
